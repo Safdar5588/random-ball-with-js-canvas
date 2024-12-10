@@ -1,0 +1,110 @@
+<canvas class="canvas"></canvas>
+
+<script>
+    let canvas = document.querySelector(".canvas")
+
+    let ctx = canvas.getContext("2d")
+    canvas.width = 400
+    canvas.height = 400
+    let cx = canvas.width / 2;
+    let cy = canvas.height / 2;
+
+    function draw() {
+        ctx.fillStyle = "black"
+        ctx.fillRect(0, 0, 400, 400)
+        ctx.fill()
+
+
+        for( let i =0 ; i<60; i++){
+
+            let line = degToRad(i* 6)
+            ctx.strokeStyle = "red"
+            ctx.lineWidth = 2
+            ctx.beginPath()
+            ctx.moveTo(cx + 200 * Math.cos(line) , cy + 200 * Math.sin(line) )
+            ctx.lineTo(cx + 180 *Math.cos(line), cy + 180 *Math.sin(line))
+            ctx.closePath()
+            ctx.stroke()
+        
+        }
+
+
+
+        ctx.lineWidth = 10
+        ctx.strokeStyle = "red"
+        ctx.beginPath()
+        ctx.arc(200, 200, 200, 0, 7)
+        ctx.closePath()
+        ctx.stroke()
+
+
+
+        // ctx.fillStyle = "white"
+        // ctx.font = "30px Arial"
+        // ctx.fillText("12", 180, 90)
+        // ctx.fillText("3", 320, 210)
+        // ctx.fillText("6", 187, 330)
+        // ctx.fillText("9", 65, 210)
+
+
+        let date = new Date();
+
+        let milisec = date.getMilliseconds() / 1000;
+        let seconds = date.getSeconds() + milisec;
+        let minutes = date.getMinutes();
+        let hours = date.getHours();
+
+        if (hours > 12) {
+            hours -= 12;
+        }
+        let secondLine = seconds * 6 - 90;
+        let minuteLine = minutes * 6 - 90;
+        let hourLine = hours * 12 - 90;
+
+        
+        // Second
+        ctx.strokeStyle = "white"
+        ctx.lineWidth = 3
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo( cx + 100 * Math.cos(degToRad(secondLine)), cy + 100 * Math.sin(degToRad(secondLine)));
+        ctx.stroke();
+
+        // minutes
+        ctx.strokeStyle = "yellow"
+        ctx.lineWidth = 5   
+        ctx.beginPath()
+        ctx.moveTo(cx, cy)
+        ctx.lineTo(cx + 100 * Math.cos(degToRad(minuteLine)), cy + 100 * Math.sin(degToRad(minuteLine)))
+        ctx.stroke()
+
+        // hours
+        ctx.strokeStyle = "blue"
+        ctx.lineWidth = 8
+        ctx.beginPath()
+        ctx.moveTo(cx, cy)
+        ctx.lineTo(cx+ 60 * Math.cos(degToRad(hourLine)), cy+60* Math.sin(degToRad(hourLine)))
+        ctx.stroke()
+
+
+        ctx.fillStyle = "gray"
+        ctx.beginPath()
+        ctx.arc(200, 200, 10, 0, 7)
+        ctx.closePath()
+        ctx.fill()
+
+    }
+
+    setInterval(draw, 10);
+
+
+    function degToRad(x) {
+        return x * Math.PI / 180;
+    }
+
+    function radToDeg(x) {
+        return x * 180 / Math.PI;
+    }
+
+
+</script>
