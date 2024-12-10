@@ -1,0 +1,210 @@
+<!-- <canvas class="canvas">
+
+</canvas>
+
+<script>
+    let canvas = document.querySelector(".canvas")
+
+    let ctx = canvas.getContext("2d")
+    canvas.width = 400
+    canvas.height = 400
+    let cx = canvas.width / 2;
+    let cy = canvas.height / 2;
+
+    let balls = [];
+
+    for (let i = 0; i < 50; i++) {
+        balls.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            xs: 0.5 - Math.random(),//positive or negative value
+            ys: 0.5 - Math.random()
+        });
+    }
+
+    function update() {
+        for (let i = 0; i < balls.length; i++) {
+            let ball = balls[i];
+
+            ball.x += ball.xs;
+            ball.y += ball.ys;
+
+            if (ball.x > canvas.width) {
+                ball.x = 0;
+            }
+
+            if (ball.x < 0) {
+                ball.x = canvas.width;
+            }
+
+            if (ball.y > canvas.height) {
+                ball.y = 0;
+            }
+
+            if (ball.y < 0) {
+                ball.y = canvas.height;
+            }
+
+        }
+    }
+
+    function render() {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+        ctx.fillStyle = 'black';
+        for (let i = 0; i < balls.length; i++) {
+            let ball = balls[i];
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, 3, 0, 7);
+            ctx.closePath();
+            ctx.fill();
+
+
+            for (let j = 0; j < balls.length; j++) {
+                if (i == j) {
+                    continue;
+                }
+                let ball2 = balls[j];
+
+                let xdiff = ball.x - ball2.x;
+                let ydiff = ball.y - ball2.y;
+                let distance = Math.sqrt(xdiff * xdiff + ydiff * ydiff);
+
+                if (distance < 50) {
+                    ctx.strokeStyle = "rgba(0, 0, 0, 0.1)";
+                    ctx.beginPath();
+                    ctx.moveTo(ball.x, ball.y);
+                    ctx.lineTo(ball2.x, ball2.y);
+                    ctx.stroke();
+                }
+
+            }
+
+        }
+    }
+    function step() {
+        update();
+        render();
+    }
+
+    setInterval(step, 1000 / 30);
+
+
+    function degToRad(x) {
+        return x * Math.PI / 180;
+    }
+
+    function radToDeg(x) {
+        return x * 180 / Math.PI;
+    }
+
+
+</script> -->
+
+<canvas class="canvas">
+
+</canvas>
+
+<script>
+    let canvas = document.querySelector(".canvas")
+
+    let ctx = canvas.getContext("2d")
+    canvas.width = 400
+    canvas.height = 400
+    let cx = canvas.width / 2;
+    let cy = canvas.height / 2;
+
+    let balls = [];
+
+    for (let i = 0; i < 50; i++) {
+        balls.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            xs: 0.5 - Math.random(),//positive or negative value
+            ys: 0.5 - Math.random()
+        });
+    }
+
+
+    function update() {
+        for (let i = 0; i < balls.length; i++) {
+            let ball = balls[i];
+
+            ball.x += ball.xs;
+            ball.y += ball.ys;
+
+            if (ball.x > canvas.width) {
+                ball.x = 0;
+            }
+
+            if (ball.x < 0) {
+                ball.x = canvas.width;
+            }
+
+            if (ball.y > canvas.height) {
+                ball.y = 0;
+            }
+
+            if (ball.y < 0) {
+                ball.y = canvas.height;
+            }
+
+        }
+    }
+
+    function render() {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+        ctx.fillStyle = 'black';
+        for (let i = 0; i < balls.length; i++) {
+            let ball = balls[i];
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, 3, 0, 7);
+            ctx.closePath();
+            ctx.fill();
+
+
+            for (let j = 0; j < balls.length; j++) {
+                if (i == j) {
+                    continue;
+                }
+                let ball2 = balls[j];
+
+                let xdiff = ball.x - ball2.x;
+                let ydiff = ball.y - ball2.y;
+                let distance = Math.sqrt(xdiff * xdiff + ydiff * ydiff);
+
+                if (distance < 50) {
+                    ctx.strokeStyle = "rgba(0, 0, 0, 0.1)";
+                    ctx.beginPath();
+                    ctx.moveTo(ball.x, ball.y);
+                    ctx.lineTo(ball2.x, ball2.y);
+                    ctx.stroke();
+                }
+
+            }
+
+        }
+    }
+    function step() {
+        update();
+        render();
+    }
+
+    setInterval(step, 1000 / 30);
+
+
+    function degToRad(x) {
+        return x * Math.PI / 180;
+    }
+
+    function radToDeg(x) {
+        return x * 180 / Math.PI;
+    }
+
+
+</script>
