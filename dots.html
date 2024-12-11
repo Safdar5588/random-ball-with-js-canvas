@@ -1,0 +1,110 @@
+<canvas class="canvas">
+
+</canvas>
+
+<script>
+    let canvas = document.querySelector(".canvas")
+    let ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let cx = canvas.width / 2;
+    let cy = canvas.height / 2;
+
+    let maxDistance = 100;
+
+    let balls = [];
+    for (let i = 0; i < 300; i++) {
+        balls.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            xs: 0.5 - Math.random(),
+            ys: 0.5 - Math.random()
+        });
+    }
+
+    let mouse = {
+        x: 0,
+        y: 0,
+        r: 200
+    };
+
+    document.addEventListener("mousemove", function(evt) {
+        mouse.x = evt.clientX;
+        mouse.y = evt.clientY;
+    });
+
+    function update() {
+        for (let i = 1; i < balls.length; i++) {
+            let ball = balls[i];
+
+            ball.x += ball.xs;
+            ball.y += ball.ys;
+
+            if (ball.x > canvas.width) {
+                ball.x = 0;
+            }
+
+            if (ball.x < 0) {
+                ball.x = canvas.width;
+            }
+
+            if (ball.y > canvas.height) {
+                ball.y = 0;
+            }
+
+            if (ball.y < 0) {
+                ball.y = canvas.height;
+            }
+
+            let dx = ball.x - mouse.x;
+            let dy = ball.y - mouse.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance <= mouse.r) {
+                let direction = Math.atan2(dy, dx);
+                ball.x += Math.cos(direction) * 5; 
+                ball.y += Math.sin(direction) * 5;
+            }
+        }
+    }
+
+    function render() {
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = 'black';
+        for (let i = 1; i < balls.length; i++) {
+            let ball = balls[i];
+            ctx.fillStyle = "red";
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, 3, 0, 7);
+            ctx.closePath();
+            ctx.fill();
+
+            for (let j = 0; j < balls.length; j++) {
+                let ball2 = balls[j];
+                let xdiff = ball.x - ball2.x;
+                let ydiff = ball.y - ball2.y;
+                let difference = Math.sqrt(xdiff * xdiff + ydiff * ydiff);
+
+                if (difference < maxDistance) {
+                    let opacity = difference / maxDistance;
+                    opacity = 1 - opacity;
+
+                    ctx.strokeStyle = `rgba(228, 0, 0, ${opacity / 2})`;
+                    ctx.beginPath();
+                    ctx.moveTo(ball.x, ball.y);
+                    ctx.lineTo(ball2.x, ball2.y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    function step() {
+        update();
+        render();
+    }
+
+    setInterval(step, 10);
+</script>
